@@ -30,7 +30,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         textFieldTwoPlayerInput.isHidden = true
         wordLogOutput.isHidden = true
         scoreLogOutput.isHidden = true
-        wordLogOutput.text = hangman.PlayerOne.myCurrentWord
+        wordLogOutput.text = hangman.playerOne.myCurrentWord
         outputImage.image = #imageLiteral(resourceName: "start screen")
         onePlayerButtonOuput.isHidden = false
         twoPlayerButtonOutput.isHidden = false
@@ -72,14 +72,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
             }
             hangman.currentUserWord = inputWord
             print(inputWord)
-            print(hangman.PlayerOne.myCurrentWord)
+            print(hangman.playerOne.myCurrentWord)
             hangman.initalizingWord()
-            wordLogOutput.text = hangman.PlayerOne.myCurrentWord
+            wordLogOutput.text = hangman.playerOne.myCurrentWord
             textFieldCharacterInput.isHidden = false
             textFieldTwoPlayerInput.isHidden = true
             return true
         case self.textFieldCharacterInput:
-            print(hangman.PlayerOne.myCurrentWord)
+            print(hangman.playerOne.myCurrentWord)
             
             guard let inputCharacter = textField.text?.lowercased()else{
                 return false
@@ -89,7 +89,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
 //            }
             // I need a function that checks that innput from the text field and compare it with the word
             // and return Players, string that either have the character and _____ and bool of winning as will as if he is active or not
-            if hangman.PlayerOne.active{
+            if hangman.playerOne.active{
                 let myPlayer = hangman.myPlayerCheck(userInputSting: inputCharacter)
                 outputMessage.text = myPlayer.playerMessage
                 print(myPlayer.playerMessage)
@@ -102,15 +102,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     textField.resignFirstResponder()
                 case .win:
                     outputMessage.text = "You Have Won"
-                    scoreLogOutput.text = "Score \(hangman.PlayerOne.score)"
+                    scoreLogOutput.text = "Score \(hangman.playerOne.score)"
                     outputImage.image = #imageLiteral(resourceName: "won")
                     scoreLogOutput.isHidden = false
-                    wordLogOutput.text = hangman.PlayerOne.myCurrentWord
+                    wordLogOutput.text = hangman.playerOne.myCurrentWord
                     textFieldCharacterInput.isHidden = true
                     textField.resignFirstResponder()
                     return true
                 case .playing:
-                    wordLogOutput.text = hangman.PlayerOne.myCurrentWord
+                    wordLogOutput.text = hangman.playerOne.myCurrentWord
                     
                 }
                 switch hangman.counter{
@@ -146,15 +146,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
         case self.textFieldTwoPlayerInput:
             return true
         case self.textFieldCharacterInput:
-                            let myCharacterSet = CharacterSet.symbols
-                            
+//                            let myCharacterSet = CharacterSet.symbols
+            
             //                string != "" &&
             print(range.upperBound)
             guard let inputWord = textField.text?.lowercased() else{
                 return false
             }
                             print(inputWord.count)
-            if inputWord.count >= 1 || myCharacterSet.contains(string.unicodeScalars.first!){
+            if inputWord.count >= 1 || !hangman.playerOne.myCurrentWord.contains(inputWord) {
                 return false
             }
             else{

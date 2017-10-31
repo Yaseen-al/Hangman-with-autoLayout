@@ -146,8 +146,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
         case self.textFieldTwoPlayerInput:
             return true
         case self.textFieldCharacterInput:
-                            let myCharacterSet = CharacterSet.symbols
-            let myotherSet = CharacterSet.decimalDigits
+//                            let myCharacterSet = CharacterSet.symbols
+//            let myotherSet = CharacterSet.decimalDigits
             
             //                string != "" &&
             print(range.upperBound)

@@ -31,7 +31,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         wordLogOutput.isHidden = true
         scoreLogOutput.isHidden = true
         wordLogOutput.text = hangman.PlayerOne.myCurrentWord
-        outputImage.image = #imageLiteral(resourceName: "count 0")
+        outputImage.image = #imageLiteral(resourceName: "start screen")
         onePlayerButtonOuput.isHidden = false
         twoPlayerButtonOutput.isHidden = false
     }
@@ -80,7 +80,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             return true
         case self.textFieldCharacterInput:
             print(hangman.PlayerOne.myCurrentWord)
-            let myCharacterSet = CharacterSet.symbols
+            
             guard let inputCharacter = textField.text?.lowercased()else{
                 return false
             }
@@ -99,6 +99,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     outputMessage.text = "You Have Lost"
                     wordLogOutput.text = hangman.currentUserWord
                     textFieldCharacterInput.isHidden = true
+                    textField.resignFirstResponder()
                 case .win:
                     outputMessage.text = "You Have Won"
                     scoreLogOutput.text = "Score \(hangman.PlayerOne.score)"
@@ -106,6 +107,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     scoreLogOutput.isHidden = false
                     wordLogOutput.text = hangman.PlayerOne.myCurrentWord
                     textFieldCharacterInput.isHidden = true
+                    textField.resignFirstResponder()
                     return true
                 case .playing:
                     wordLogOutput.text = hangman.PlayerOne.myCurrentWord
@@ -131,19 +133,45 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     
                 }
             }
+            textField.text = ""
             return true
+        default:
+            break
+        }
+        textField.text = ""
+        return true
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch textField {
+        case self.textFieldTwoPlayerInput:
+            return true
+        case self.textFieldCharacterInput:
+                            let myCharacterSet = CharacterSet.symbols
+                            
+            //                string != "" &&
+            print(range.upperBound)
+            guard let inputWord = textField.text?.lowercased() else{
+                return false
+            }
+                            print(inputWord.count)
+            if inputWord.count >= 1 || myCharacterSet.contains(string.unicodeScalars.first!){
+                return false
+            }
+            else{
+                return true
+            }
         default:
             break
         }
         return true
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.textFieldCharacterInput.delegate = self
         self.textFieldTwoPlayerInput.delegate = self
+        outputImage.image = #imageLiteral(resourceName: "start screen")
     }
     
     override func didReceiveMemoryWarning() {

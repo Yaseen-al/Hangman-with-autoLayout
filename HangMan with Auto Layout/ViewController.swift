@@ -146,7 +146,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
         case self.textFieldTwoPlayerInput:
             return true
         case self.textFieldCharacterInput:
-//                            let myCharacterSet = CharacterSet.symbols
+                            let myCharacterSet = CharacterSet.symbols
+            let myotherSet = CharacterSet.decimalDigits
             
             //                string != "" &&
             print(range.upperBound)
@@ -154,7 +155,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                 return false
             }
                             print(inputWord.count)
-            if inputWord.count >= 1 || !hangman.playerOne.myCurrentWord.contains(inputWord) {
+                            if inputWord.count >= 1{
                 return false
             }
             else{
